@@ -1,0 +1,211 @@
+<template>
+  <v-app id="inspire" app>
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+    ><v-list>
+      <v-list-item >
+        <v-list-item-avatar>
+          <v-img :src="`${host}${picture}`"></v-img>
+        </v-list-item-avatar>
+
+        <v-list-item-content>
+          <v-list-item-title>{{username}}</v-list-item-title>
+        </v-list-item-content>
+            <v-btn icon @click="logout">
+              <v-icon >mdi mdi-logout</v-icon>
+            </v-btn>
+      </v-list-item> 
+
+      <v-divider></v-divider>
+       <v-list-item to="/dashboard"> 
+        <v-list-item-icon>
+          <v-icon>mdi mdi-view-dashboard</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title >Dashboard</v-list-item-title>
+       </v-list-item>
+       <v-list-item  v-if="IsAdmin"  to="/orders"> 
+        <v-list-item-icon>
+          <v-icon>fas fa-globe</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title >Orders</v-list-item-title>
+       </v-list-item>
+       <v-list-item to="/invetory/update"> 
+        <v-list-item-icon>
+          <v-icon>mdi-calculator</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title >Inventory</v-list-item-title>
+       </v-list-item>
+       <v-list-item to="/products"> 
+        <v-list-item-icon>
+          <v-icon>fab fa-product-hunt</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title >Products</v-list-item-title>
+       </v-list-item>
+       <v-list-item to="/seos"> 
+        <v-list-item-icon>
+          <v-icon>fab fa-searchengin</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title >SEO</v-list-item-title>
+       </v-list-item>
+       <v-list-item to="/blogs"> 
+        <v-list-item-icon>
+          <v-icon>fas fa-blog</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title >Blog</v-list-item-title>
+       </v-list-item>
+       <v-list-item to="/guides"> 
+        <v-list-item-icon>
+          <v-icon>fas fa-blog</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title >Guide</v-list-item-title>
+       </v-list-item>
+       <v-list-item v-if="IsAdmin" to="/users"> 
+        <v-list-item-icon>
+          <v-icon>fas fa-users</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title >Users</v-list-item-title>
+       </v-list-item>
+       <v-list-item  v-if="IsAdmin" to="/users/password"> 
+        <v-list-item-icon>
+          <v-icon>fas fa-cogs</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title >Settings</v-list-item-title>
+       </v-list-item>
+      
+        
+    </v-list>
+    </v-navigation-drawer>
+
+    <v-app-bar app>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+
+      <v-toolbar-title><span >Chantosweb</span></v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn text v-if="n === 0"
+               :to="`/user/messages`"
+          >
+              <v-icon left dark>
+                mdi-bell
+              </v-icon>
+              </v-btn>
+              <v-btn text v-else
+               :to="`/user/messages`">
+                  <v-badge
+              color="green"
+              :content="n"
+            >
+              <v-icon left dark>
+                mdi-bell
+              </v-icon>
+            </v-badge>
+              </v-btn>
+               <v-btn text v-if="m === 0"
+              :to="`/user/messages`"
+          >
+              <v-icon left dark>
+                mdi-email
+              </v-icon>
+              </v-btn>
+              <v-btn text v-else
+               :to="`/user/messages`">
+                  <v-badge
+              color="green"
+              :content="m"
+            >
+              <v-icon left dark>
+                mdi-email
+              </v-icon>
+            </v-badge>
+              </v-btn>
+            
+    </v-app-bar>
+
+    <v-main>
+      <slot />
+    </v-main>
+    <foot/>
+  </v-app>
+</template>
+
+<script>
+import cons from '../helpers/myconstants'
+// import axios from '../axios'
+import foot from './foot'
+  export default {
+    data: () => ({ drawer: null,
+        nortfications:[],
+        messages:[],
+        m:0,
+        n:0,
+        host:'',
+     }),
+    components:{
+        foot
+    },
+    computed:{
+        username(){
+            return this.$store.getters.username
+        },
+        business(){
+            return this.$store.getters.business
+        },
+        IsAdmin(){
+            return this.$store.getters.IsAdmin
+        },
+        IsEmployee(){
+            return this.$store.getters.IsEmployee
+        },
+        IsSupervisor(){
+            return this.$store.getters.IsSupervisor
+        },
+        picture(){
+          // console.log("picture",this.$store.getters.picture)
+            return this.$store.getters.picture
+        }
+    },
+    created() {
+      // this.fetchMessages()
+      // this.fetchNort()
+      this.host = cons.host
+      console.log(this.host)
+      // this.newInvoice()
+    
+  },
+    methods:{
+     logout: function () {
+        this.$store.dispatch('logout')
+        .then(() => {
+          this.$router.push('/login')
+        })
+      }
+    // async fetchMessages(){
+    //     try{
+    //           this.$store.commit("setLoaderTrue")
+    //         const {data} = await axios.get("api/messages/unread")
+    //         const {num, messages} = data
+    //         this.m = num
+    //         this.messages = messages
+    //       }catch(err){
+    //       this.snackbar = true
+    //       //   console.log(err)
+    //       this.errs = err.response.data 
+    //       }
+    //   },
+    //    async fetchNort(){
+    //     try{
+    //           this.$store.commit("setLoaderTrue")
+    //         const {data} = await axios.get("api/nortifications/unread")
+    //         const {num, nortfications} = data
+    //         this.n = num
+    //         this.nortfications = nortfications
+    //       }catch(err){
+    //       this.snackbar = true
+    //       //   console.log(err)
+    //       this.errs = err.response.data
+    //       }
+    //   },
+    }
+
+  }
+</script>
