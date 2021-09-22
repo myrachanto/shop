@@ -2,7 +2,7 @@
 <div>
     <v-container class="fill-height">
       <v-row align="center" justify="center">
-        <v-col cols="12" sm="12" md="12">
+        <v-col cols="12" sm="10" md="10">
           <v-card class="elevation-12">
                   <ValidationObserver
                     ref="observer"
@@ -105,86 +105,158 @@
                                     </v-col> 
                                   </v-row>
                                       <v-row>
+                                         <v-col
+                                      cols="12"
+                                      md="4"
+                                    ><validation-provider
+                                        v-slot="{ errors }"
+                                        name="Price"
+                                        rules="required|"
+                                      >
+                                      <v-text-field
+                                        v-model="form.buyprice"
+                                        label="price"
+                                        :error-messages="errors"   
+                                        required
+                                        type="number"
+                                      ></v-text-field>
+                                      </validation-provider>
+                                    </v-col> 
                                   <v-col
                                     cols="12"
-                                    md="6"
-                                    v-if="supercategory"
+                                    md="4"
+                                    v-if="majorcats"
                                   >
                                    <v-autocomplete
-                                        v-model="supercats"
-                                        :items="supercategory"
-                                        auto-select-first
+                                        v-model="majorcati"
+                                        :items="majorcategory"
                                         chips
                                         clearable
-                                        deletable-chips
-                                        multiple
-                                        small-chips
-                                        dense
+                                        hide-selected
                                         item-text="name"
                                         item-value="name"
-                                        label="Search super Category..."
-                                        @change="GetMajorcategory(supercats)"
+                                        label="Search majorcat..."
+                                        @change="GetMajorcategory(majorcati)"
                                       >
+                                        <template v-slot:no-data>
+                                          <v-list-item>
+                                            <v-list-item-title>
+                                              Search for 
+                                              <strong>majorcat</strong>
+                                            </v-list-item-title>
+                                          </v-list-item>
+                                        </template>
+                                        <template v-slot:selection="{ attr, on, item, selected }">
+                                          <v-chip
+                                            v-bind="attr"
+                                            :input-value="selected"
+                                            color="blue-grey"
+                                            class="white--text"
+                                            v-on="on"
+                                          >
+                                            <v-icon left>
+                                              mdi-check-box-outline
+                                            </v-icon>
+                                            <span v-text="item.name"></span>
+                                          </v-chip>
+                                        </template>
+                                        <template v-slot:item="{ item }">
+                                          <v-list-item-avatar
+                                            color="indigo"
+                                            class="headline font-weight-light white--text"
+                                          >
+                                            {{ item.name.charAt(0) }}
+                                          </v-list-item-avatar>
+                                          <v-list-item-content>
+                                            <v-list-item-title v-text="item.name"></v-list-item-title>
+                                            <v-list-item-subtitle >{{item.title}}</v-list-item-subtitle>
+                                          </v-list-item-content>
+                                          <v-list-item-action>
+                                            <v-icon>mdi-check-box-outline</v-icon>
+                                          </v-list-item-action>
+                                        </template>
                                       </v-autocomplete>
                                   </v-col>
                                   <v-col
                                       cols="12"
-                                      md="6"
-                                      v-if="supercati"
+                                      md="4"
+                                      v-if="majorcati"
                                     >
                                    <v-autocomplete
-                                        v-model="categori"
-                                        :items="categis"
-                                        auto-select-first
+                                        v-model="categoryi"
+                                        :items="category"
                                         chips
                                         clearable
-                                        deletable-chips
-                                        multiple
-                                        small-chips
-                                        dense
+                                        hide-details
+                                        hide-selected
                                         item-text="name"
-                                        item-value="name"
-                                        label="Search super Category..."
+                                        item-value="title"
+                                        label="Search category..."
                                       >
+                                        <template v-slot:no-data>
+                                          <v-list-item>
+                                            <v-list-item-title>
+                                              Search for 
+                                              <strong>category</strong>
+                                            </v-list-item-title>
+                                          </v-list-item>
+                                        </template>
+                                        <template v-slot:selection="{ attr, on, item, selected }">
+                                          <v-chip
+                                            v-bind="attr"
+                                            :input-value="selected"
+                                            color="blue-grey"
+                                            class="white--text"
+                                            v-on="on"
+                                          >
+                                            <v-icon left>
+                                              mdi-check-box-outline
+                                            </v-icon>
+                                            <span v-text="item.name"></span>
+                                          </v-chip>
+                                        </template>
+                                        <template v-slot:item="{ item }">
+                                          <v-list-item-avatar
+                                            color="indigo"
+                                            class="headline font-weight-light white--text"
+                                          >
+                                            {{ item.name.charAt(0) }}
+                                          </v-list-item-avatar>
+                                          <v-list-item-content>
+                                            <v-list-item-title v-text="item.name"></v-list-item-title>
+                                            <v-list-item-subtitle >{{item.title}}</v-list-item-subtitle>
+                                          </v-list-item-content>
+                                          <v-list-item-action>
+                                            <v-icon>mdi-check-box-outline</v-icon>
+                                          </v-list-item-action>
+                                        </template>
                                       </v-autocomplete>
-                                    </v-col>
+                                    </v-col>                                    
+                                    
                                    </v-row>
-                                   <v-row>
-                                  <v-col
-                                    cols="12"
-                                    md="6"
-                                  >
-                                   <v-autocomplete
-                                        v-model="majorcat"
-                                        :items="majorcategory"
-                                        auto-select-first
-                                        chips
-                                        clearable
-                                        deletable-chips
-                                        multiple
-                                        small-chips
-                                        dense
-                                        item-text="name"
-                                        item-value="name"
-                                        label="Search NAv Menu..."
-                                      >
-                                        
-                                      </v-autocomplete>
-                                  </v-col>
-                                   </v-row>
-                                   <v-row>
+                                   <v-row>  
                                     <v-col
                                       cols="12"
-                                      md="6"
+                                      md="4"
                                     >
-                                    <v-btn class="primary" @click="createitem">Add Specifications</v-btn>
-                                    <div v-if="form.services">
-                                          <ul v-for="(item,i) in form.services" :key="i" >
-                                            <li>{{item.name}} at {{item.price}}<v-btn color="red" class="ma-1" @click="remove(i)">X</v-btn></li>
+                                    <v-btn class="primary" @click="createsizing">Add Size</v-btn>
+                                    <div v-if="sizings">
+                                          <ul v-for="(item,i) in sizings" :key="i" >
+                                            <li>{{item.name}} <v-btn x-small color="red" class="ma-1" @click="removesizing(i)">X</v-btn></li>
                                           </ul>
                                     </div>
-                                    <div v-else>Add Specs</div>
-                                    </v-col>                                    
+                                    </v-col>  
+                                    <v-col
+                                      cols="12"
+                                      md="4"
+                                    >
+                                    <v-btn class="primary" @click="createcolor">Add Colors</v-btn>
+                                    <div v-if="colors">
+                                          <ul v-for="(col,i) in colors" :key="i" >
+                                            <li>{{col.name}}<v-btn x-small color="red" class="ma-1" @click="removec(i)">X</v-btn></li>
+                                          </ul>
+                                    </div>
+                                    </v-col>                                     
                                     <v-col
                                       cols="12"
                                       md="4"
@@ -192,14 +264,14 @@
                                       <label for="newarrivals"> Newarrivals</label>                                    
                                     </v-col>
                                    </v-row>
-                                   <v-row>
+                                   <!-- <v-row>
                                     <v-col
                                       cols="12"
                                       md="12"
                                     > 
                                     <vue-editor v-model="form.description"></vue-editor>
                                     </v-col>
-                                   </v-row>
+                                   </v-row> -->
                                    
                                    <v-row>
                                     <v-col
@@ -245,9 +317,8 @@
     </v-container>
     <!-- <item /> -->
     <itemmodal :dialogitemi="dialogitemi" :itemiclose="itemiclose" :savor="savor"/>
-    <!--<tax :dialogtax="dialogtax" :taxclose="taxclose" :taxs="taxs"/> -->
-  <categorymodal :dialogcategory="dialogcategory" :categoryclose="categoryclose" :majorcode="majorc"/>
-  <majorcatmodal :dialogmajorcat="dialogmajorcat" :majorcatclose="majorcatclose"/>
+    <colort :dialogcolori="dialogcolori" :coloriclose="coloriclose" :colorsavor="colorsavor"/>
+    <sizing :dialogsizingi="dialogsizingi" :sizingiclose="sizingiclose" :sizingsavor="sizingsavor"/>
 
 </div>
 </template>
@@ -255,14 +326,16 @@
 <script>
  import axios from '../../../axios'
 import cons from '@/helpers/myconstants'
-import categorymodal from '@/components/modals/category'
-import majorcatmodal from '@/components/modals/majorcat'
+// import categorymodal from '@/components/modals/category'
+// import majorcatmodal from '@/components/modals/majorcat'
 import itemmodal from '@/components/modals/item'
 import { VueEditor } from "vue2-editor"
-import { supercategory, majorcategory, category } from '@/helpers/data'
+import {majorcategory, category } from '@/helpers/data'
 
   import { required, email, max } from 'vee-validate/dist/rules'
   import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
+import Colort from '../../../components/modals/colort.vue'
+import Sizing from '../../../components/modals/sizing.vue'
 // import Item from '../../../components/modals/item.vue'
  setInteractionMode('eager')
 
@@ -286,10 +359,12 @@ export default {
   components: {
       ValidationProvider,
       ValidationObserver,
-      categorymodal,
-      majorcatmodal,
+      // categorymodal,
+      // majorcatmodal,
       VueEditor,
       itemmodal,
+    Colort,
+    Sizing,
     },
   data(){
     return{
@@ -298,28 +373,24 @@ export default {
             title:'',
             description:'',
             footer: '',
-            supercategory: '',
             majorcat:'',
+            buyprice: '',
             meta: '',
             altertag: '',
             category:'',
             price:'',
             newarrivals: '',
             picture:null,
-            services: []
+            services: [],
+            colors: []
         },
-        dialogcategory: false,
-        dialogmajorcat: false,
         dialogitemi: false,
         dialogcolori: false,
+        dialogsizingi: false,
         host:'',
         majorcati:'',
-        majorcat:[],
-        supercati: {},
-        supercats: [],
-        categis: [],
         majorc: '',
-        categori: [],
+        categoryi:'',
         majorcats:[],
         categorylist:[],
         services: [],
@@ -327,7 +398,8 @@ export default {
         filesa: [],
         errs:{},
         option:[],
-        suppliers: [],
+        colors:[],
+        sizings:[],
         title:'Create Product',
         init:'api/products/view',
         redirect: '/products',
@@ -335,10 +407,8 @@ export default {
         categs: 'api/categorys',
         snackbar:false,
         timeout:3000,
-        superc: {},
         category,
-        majorcategory,
-        supercategory
+        majorcategory
     }
   },
   created(){
@@ -347,29 +417,15 @@ export default {
   methods:{
     GetMajorcategory(name) {
       if (name) {
-        // console.log('555555555555555555', name)
-        name.map((item) => {
-          return this.getresults(item)
-        })
-        // console.log('fffffffffffff', this.categis)
-      }
-    },
-    getresults (name) {
-      this.superc = this.supercategory.find(m => {
-          return m.name == name
-      })
-      this.categis.push(...this.superc.category)
-    },
-    GetMajcategory(name) {
-      if (name) {
-        // console.log('++++++++++++++++++++++++++', name)
+        // console.log(name)
         // console.log(this.majorcats)
-        // let majorcatinfo = this.majorcategory.find(m => {
-        //   return m.name == name
-        // })
+        let majorcatinfo = this.majorcategory.find(m => {
+          return m.name == name
+        })
         // console.log(majorcatinfo)
-        // this.majorcati = majorcatinfo.name
-        // this.categorylist = majorcatinfo.category
+        this.majorc = majorcatinfo.majorcode
+        this.categorylist = majorcatinfo.category
+        // console.log(this.majorc)
       }
     },
     onFile(e){
@@ -387,13 +443,22 @@ export default {
       this.form.services.push(payload)
       console.log("services", this.form.services)
     },
+    colorsavor(payload){
+      this.colors.push(payload)
+      console.log("colors", this.colors)
+    },
+    sizingsavor(payload){
+      this.sizings.push(payload)
+      console.log("sizings", this.sizings)
+    },
     remove(index){
       this.form.services.splice(index,1)
     },
-    dashurl(array) {
-      return  array.map((item) => {
-        return {name:item.split(' ').join('-')}
-      })
+    removec(index){
+      this.colors.splice(index,1)
+    },
+    removesizing(index){
+      this.sizings.splice(index,1)
     },
    async save(){
           try{
@@ -410,16 +475,17 @@ export default {
                   fd.append("name", this.form.name)
                   fd.append("title", this.form.title)
                   fd.append("meta", this.form.meta)
+                  fd.append("buyprice", this.form.buyprice)
                   fd.append("altertag", this.form.name.split(' ').join('-'))
                   fd.append("url", this.form.name.split(' ').join('-'))
                   fd.append("description", this.form.description)
                   fd.append("footer", this.form.footer)
-                  fd.append("majorcategory", JSON.stringify(this.dashurl(this.majorcat)))
-                  fd.append("supercategory", JSON.stringify(this.dashurl(this.supercats)))
-                  fd.append("category", JSON.stringify(this.dashurl(this.categori)))
+                  fd.append("majorcategory", this.majorcati)
+                  fd.append("category", this.categoryi)
                   fd.append("newarrivals", this.form.newarrivals)
                   fd.append("services", JSON.stringify(this.form.services))
-                  // fd.append("colors", JSON.stringify(this.form.colors))
+                  fd.append("colors", JSON.stringify(this.colors))
+                  fd.append("sizes", JSON.stringify(this.sizings))
               // axios.defaults.headers.common['Content-Type'] = 'multipart/form-data'
               const {data} = await axios.post(`${this.store}`, 
                 fd ,{'Content-Type': 'multipart/form-data'})
@@ -439,11 +505,12 @@ export default {
                   fd.append("meta", this.form.meta)
                   fd.append("url", this.form.name.split(' ').join('-'))
                   fd.append("altertag", this.form.name.split(' ').join('-'))
-                  fd.append("majorcategory", JSON.stringify(this.dashurl(this.majorcat)))
-                  fd.append("supercategory", JSON.stringify(this.dashurl(this.supercats)))
-                  fd.append("category", JSON.stringify(this.dashurl(this.categori)))
+                  fd.append("majorcategory", this.majorcati)
+                  fd.append("category", this.categoryi)
                   fd.append("newarrivals", this.form.newarrivals)
-                  fd.append("services", JSON.stringify(this.form.services))
+                  // fd.append("services", JSON.stringify(this.form.services))
+                  fd.append("buyprice", this.form.buyprice)
+                  fd.append("sizes", JSON.stringify(this.sizings))
                   // fd.append("colors", JSON.stringify(this.form.colors))
               // axios.defaults.headers.common['Content-Type'] = 'multipart/form-data'
               const {data} = await axios.post(`${this.store}`, 
@@ -453,7 +520,6 @@ export default {
                   this.$router.push(this.redirect)
                   }
                   this.$store.commit("setLoader")
-
             }
         }catch(err){
             this.snackbar = true
@@ -463,28 +529,6 @@ export default {
         }
 
   },
-  // async Getdata () {
-  //   try{
-  //     const {data} = await axios.get('api/supplier')
-  //         this.suppliers = data
-  //         console.log(data)
-
-  //   }catch(err){
-  //     console.log(err)
-  //   }
-  // },
-    createcategory(){
-      this.dialogcategory = true
-    },
-      categoryclose() {
-        this.dialogcategory = false
-      },
-    createmajorcat(){
-      this.dialogmajorcat = true 
-    },
-      majorcatclose() {
-        this.dialogmajorcat = false
-      },
     createitem(){
       this.dialogitemi = true
     },
@@ -496,6 +540,12 @@ export default {
     },
       coloriclose() {
         this.dialogcolori = false
+      },
+    createsizing(){
+      this.dialogsizingi = true
+    },
+      sizingiclose() {
+        this.dialogsizingi = false
       },
   }
   }

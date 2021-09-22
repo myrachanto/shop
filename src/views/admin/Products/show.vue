@@ -1,11 +1,10 @@
 <template> 
-<v-container>
+<v-container class="">
                 <v-row> 
                   <v-col cols="12" sm="10" md="10">
-               
-  <v-card v-if="form"
-            class="mx-auto"
-          >
+              <v-card v-if="form"
+                        class="mx-auto"
+                      >
            <!-- <div
            class="height=300px"
            style="background:#CFD8DC"
@@ -15,9 +14,9 @@
             </div>  
             </div> -->
             <v-container>
-            <v-row>
-              <v-col md="6">
-                 <v-row>
+            <v-row >
+              <v-col md="6" >
+                <v-row>
                   <v-col cols="12" sm="6" md="6">
                     <v-card
                       class="pa-2"
@@ -60,12 +59,7 @@
                       outlined
                       tile
                     >
-                     <div v-if="form.majorcat">
-                     <label>Navigation</label>
-                    <ul class="fleet" v-for="(item,i) in form.majorcat" :key="i">
-                        <li class="rod">{{item.name}}</li>
-                    </ul>
-                   </div>
+                   Category:<span class="greener"> {{form.category}}</span>
                     </v-card>
                   </v-col><v-col cols="12" sm="6" md="6">
                     <v-card
@@ -73,12 +67,7 @@
                       outlined
                       tile
                     >
-                     <div v-if="form.supercategory">
-                     <label>Flavours</label>
-                    <ul class="fleet" v-for="(item,i) in form.supercategory" :key="i">
-                        <li class="rod">{{item.name}}</li>
-                    </ul>
-                     </div>
+                    Major category:<span class="greener"> {{form.majorcat}}</span>
                     </v-card>
                   </v-col>
                 </v-row>  
@@ -89,21 +78,27 @@
                       outlined
                       tile
                     >
-                     <div v-if="form.category">
-                     <label>Types</label>
-                    <ul class="fleet" v-for="(item,i) in form.category" :key="i">
-                        <li class="rod">{{item.name}}</li>
-                    </ul>
-                     </div>
+                   Price:<span class="greener">{{form.buyprice}}</span>
                     </v-card>
                   </v-col>
                 </v-row> 
                 <v-row>
                   <v-col md="12" class="mt-2">
-                   <div v-if="form.services">
-                     <label>Specs</label>
-                    <ul class="fleet" v-for="(item,i) in form.services" :key="i">
-                        <li class="rod">{{item.name}} at ksh{{item.price}}</li>
+                   <div v-if="form.colors">
+                     <label>Colors</label>
+                    <ul class="fleet" v-for="(item,i) in form.colors" :key="i">
+                        <li class="rod">{{item.name}}</li>
+                    </ul>
+                   </div>
+                  </v-col>
+                </v-row>  
+                <hr class="my-2"/>
+                <v-row>
+                  <v-col md="12">
+                     <label>Sizes</label>
+                   <div v-if="form.sizes">
+                    <ul class="fleet" v-for="(item,i) in form.sizes" :key="i">
+                        <li class="rod">{{item.name}} </li>
                     </ul>
                    </div>
                   </v-col>
@@ -122,13 +117,14 @@
                     class="grey darken-4"
                   ></v-img>
                 </v-card>
-                  </v-col></v-row>
+                  </v-col></v-row>                  
+                <hr class="my-2" />
                   <v-row>
                  <v-col
                   cols="12"
                   md="12">
                   <h2>Footer</h2>
-              <p v-html="form.footer" class="greener"></p> 
+              <p class="greener" v-html="form.footer"></p> 
 
                     </v-col>
                   </v-row>
@@ -139,7 +135,7 @@
                       <v-btn class="ma-3" color="blue accent-3" dark @click="Edit(form.code)">Edit</v-btn>
                     </div>
           </v-card>
-                  </v-col>
+      </v-col>
   </v-row>
 </v-container>
 </template>
@@ -215,6 +211,7 @@ export default {
   },    
   }
 </script>
+
 <style>
 
 .greener{
@@ -231,16 +228,6 @@ export default {
   color: white;
   padding: 2px;
   /* border-radius: 20%; */
-  min-width: 70px;
-  text-align: center;
-}
-.rod1{
-  list-style: none;
-  border: green;
-  background-color: rgb(187, 177, 177);
-  color: green;
-  padding: 2px;
-  border-radius: 20%;
   min-width: 70px;
   text-align: center;
 }

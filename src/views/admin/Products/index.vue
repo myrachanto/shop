@@ -23,7 +23,6 @@ export default {
                 { text: 'Title', value: 'title' },
                 { text: 'Featured', value: 'featured' },
                 { text: 'Hot deals', value: 'hotdeals' },
-                { text: 'Likes', value: 'likes' },
                 { text: 'Actions', value: 'actions', sortable: false },
               ]
           }
