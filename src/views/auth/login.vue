@@ -122,8 +122,8 @@ import front from '../../layouts/front'
       front
     },
     data: () => ({
-      password: '',
-      email: '',
+      password: '1234567',
+      email: 'myrachanto@gmail.com',
       errors: null,
       timeout: 3000,
       snackbar:false,
